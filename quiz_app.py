@@ -3,9 +3,10 @@ import random
 
 st.set_page_config(page_title="개보점프 심화탐구 퀴즈", page_icon="🔒")
 
-st.title("🔒 개보점프 심화탐구 퀴즈에 오신 걸 환영합니다!")
-st.write("아동 개인정보 보호, 물리 과학, 유엔아동권리협약을 재미있게 배워봐요!")
-st.write("각 문제를 풀고 틀리면 필요한 해설도 보여줘요.\n")
+st.title("🔒개보점프 심화탐구")
+st.write("개보점프 심화탐구 퀴즈에 오신 것을 환영합니다")
+st.write("2025 STEAM융합수업의 아동 개인정보 보호, 물리 과학, 유엔아동권리협약을 재미있게 배워봐요!")
+st.write("한 번 문제를 풀어볼까요?\n")
 
 quiz_list = [
     # 1번 영역: 아동 개인정보 보호 개념
@@ -158,7 +159,7 @@ def show_encouragement(score):
     elif 10 <= percent < 30:
         return "🌱 아직 연습이 필요해요. 걱정 말고 하나하나 다시 해보면 누구든지 잘할 수 있어요."
     else:
-        return "🛠 괜찮아요. 모든 시작은 작은 실수에서부터예요. 틀려도 괜찮아요. 함께 다시 배워봐요!"
+        return "📖 괜찮아요. 모든 시작은 작은 실수에서부터예요. 틀려도 괜찮아요. 함께 다시 배워봐요!"
 
 def reset_quiz():
     st.session_state.quiz_order = random.sample(range(len(quiz_list)), TOTAL_QUESTIONS)
@@ -211,6 +212,7 @@ if st.session_state.current < TOTAL_QUESTIONS:
     show_question(st.session_state.quiz_order[st.session_state.current])
 else:
     st.header("🎉 퀴즈 완료!")
+    st.write("수고하셨습니다.")
     st.write(f"총 점수: {st.session_state.score} / {TOTAL_QUESTIONS * POINTS_PER_QUESTION}점")
     st.markdown(f"### {show_encouragement(st.session_state.score)}")
 
