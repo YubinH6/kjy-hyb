@@ -3,7 +3,7 @@ import random
 
 st.set_page_config(page_title="개보점프 심화탐구 퀴즈", page_icon="🔒")
 
-st.title("🔒개보점프 심화탐구")
+st.title("🔒 개보점프 심화탐구")
 st.write("개보점프 심화탐구 퀴즈에 오신 것을 환영합니다")
 st.write("2025 STEAM융합수업의 아동 개인정보 보호, 물리 과학, 유엔아동권리협약을 재미있게 배워봐요!")
 st.write("한 번 문제를 풀어볼까요?\n")
