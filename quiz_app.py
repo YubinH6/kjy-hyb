@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="개보점프 - 개인정보 보호 퀴즈", page_icon="🔒")
+
 st.title("🔒 개보점프에 오신 걸 환영합니다!")
 st.write("개인정보 보호에 대해 잘 알고 있는지 퀴즈로 알아보세요!")
 st.write("맞히면 칭찬, 틀리면 해설이 나옵니다.\n")
@@ -25,20 +27,23 @@ quiz_list = [
 if "quiz_step" not in st.session_state:
     st.session_state.quiz_step = 0
     st.session_state.score = 0
+    st.session_state.answered = False
 
 if st.session_state.quiz_step < len(quiz_list):
     quiz = quiz_list[st.session_state.quiz_step]
     st.subheader(f"문제 {st.session_state.quiz_step + 1}: {quiz['question']}")
 
     col1, col2 = st.columns(2)
-    if col1.button("⭕ O", key="O"):
+    if col1.button("⭕ O") and not st.session_state.answered:
+        st.session_state.answered = True
         selected = "O"
-    elif col2.button("❌ X", key="X"):
+    elif col2.button("❌ X") and not st.session_state.answered:
+        st.session_state.answered = True
         selected = "X"
     else:
         selected = None
 
-    if selected:
+    if st.session_state.answered:
         if selected == quiz["answer"]:
             st.success("✅ 정답입니다! 아주 잘했어요! 🎉")
             st.session_state.score += 1
@@ -46,8 +51,10 @@ if st.session_state.quiz_step < len(quiz_list):
             st.error(f"❌ 오답입니다. 정답은 '{quiz['answer']}'예요.")
             st.info(f"💡 해설: {quiz['explanation']}")
 
-        st.session_state.quiz_step += 1
-        st.experimental_rerun()
+        if st.button("👉 다음 문제로 넘어가기"):
+            st.session_state.quiz_step += 1
+            st.session_state.answered = False
+            st.rerun()
 
 else:
     st.write(f"📊 퀴즈 완료! 총 {len(quiz_list)}문제 중 {st.session_state.score}문제를 맞혔어요.")
@@ -58,3 +65,9 @@ else:
         st.info("👍 잘했어요! 조금 더 공부하면 완벽할 수 있어요.")
     else:
         st.warning("📚 괜찮아요, 지금부터 배우면 늦지 않았어요!")
+
+    if st.button("🔁 처음부터 다시 풀기"):
+        st.session_state.quiz_step = 0
+        st.session_state.score = 0
+        st.session_state.answered = False
+        st.rerun()
